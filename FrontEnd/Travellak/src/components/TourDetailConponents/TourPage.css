@@ -1,0 +1,11 @@
+body {
+  justify-content: center;
+}
+.tour-details-container {
+  padding-top: 120px;
+}
+.sticky-sidebar {
+  position: sticky;
+  top: 150px; /* hoặc khoảng cách mong muốn từ đỉnh viewport */
+  z-index: 10;
+}

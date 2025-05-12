@@ -1,0 +1,16 @@
+package com.anhkhoa.travellak.dto.Response;
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class ChartResponse {
+    long totalTour;
+    long totalBooking;
+    long totalUser;
+    Double totalRevenue;
+}

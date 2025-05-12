@@ -1,0 +1,22 @@
+.btn-outline-secondary {
+    border-color: #6c757d;
+    color: #6c757d;
+}
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white;
+}
+.btn-orange {
+    background-color: #fd7e14;
+    color: white;
+}
+.btn-orange:hover {
+    background-color: #e06c0a;
+    color: white;
+}
+.text-blue-900 {
+    color: #0a58ca; /* Bootstrap primary color */
+}
+.text-orange-600 {
+    color: #dc3545; /* Bootstrap danger color (adjust as needed) */
+}
