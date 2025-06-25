@@ -1,13 +1,15 @@
 package com.anhkhoa.travellak.Mapper;
-import com.anhkhoa.travellak.Entity.Tour;
-import com.anhkhoa.travellak.dto.Request.Tour.TourCreationRequest;
-import com.anhkhoa.travellak.dto.Request.Tour.TourUpdateRequest;
-import com.anhkhoa.travellak.dto.Response.TourResponse;
+
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-import java.util.List;
+import com.anhkhoa.travellak.Entity.Tour;
+import com.anhkhoa.travellak.dto.Request.Tour.TourCreationRequest;
+import com.anhkhoa.travellak.dto.Request.Tour.TourUpdateRequest;
+import com.anhkhoa.travellak.dto.Response.TourResponse;
 
 @Mapper(componentModel = "spring")
 public interface TourMapper {
@@ -24,6 +26,6 @@ public interface TourMapper {
     void updateTour(@MappingTarget Tour tour, TourUpdateRequest request);
 
     TourResponse tourTourResponse(Tour tour);
-    List<TourResponse> toListTourResponses(List<Tour> tours);
 
+    List<TourResponse> toListTourResponses(List<Tour> tours);
 }

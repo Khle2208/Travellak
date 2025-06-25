@@ -1,5 +1,11 @@
 package com.anhkhoa.travellak.Service;
 
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+
 import com.anhkhoa.travellak.Entity.Cities;
 import com.anhkhoa.travellak.Entity.Countries;
 import com.anhkhoa.travellak.Mapper.CitiesMapper;
@@ -7,14 +13,10 @@ import com.anhkhoa.travellak.Repository.CitiesRepository;
 import com.anhkhoa.travellak.Repository.CountriesRepository;
 import com.anhkhoa.travellak.dto.Request.Cities.CitiesCreationRequest;
 import com.anhkhoa.travellak.dto.Request.Cities.CitiesUpdateRequest;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +29,8 @@ public class CitiesService {
     CitiesMapper citiesMapper;
 
     public Cities createCity(CitiesCreationRequest request) {
-        Countries country = countriesRepository.findById(request.getCountryId())
+        Countries country = countriesRepository
+                .findById(request.getCountryId())
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy quốc gia"));
 
         Cities city = citiesMapper.toCities(request);
@@ -41,17 +44,19 @@ public class CitiesService {
     }
 
     public Cities getCityById(UUID id) {
-        return citiesRepository.findById(id)
+        return citiesRepository
+                .findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy thành phố với ID: " + id));
     }
 
     public Cities updateCity(UUID id, CitiesUpdateRequest request) {
-        Cities existingCity = citiesRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy thành phố"));
+        Cities existingCity =
+                citiesRepository.findById(id).orElseThrow(() -> new RuntimeException("Không tìm thấy thành phố"));
 
         BeanUtils.copyProperties(request, existingCity);
 
-        Countries country = countriesRepository.findById(request.getCountryId())
+        Countries country = countriesRepository
+                .findById(request.getCountryId())
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy quốc gia"));
         existingCity.setCountry(country);
 

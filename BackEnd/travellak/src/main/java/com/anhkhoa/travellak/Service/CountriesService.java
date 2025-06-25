@@ -1,18 +1,21 @@
 package com.anhkhoa.travellak.Service;
 
-import com.anhkhoa.travellak.Entity.Countries;
-import com.anhkhoa.travellak.Mapper.CountriesMapper;
-import com.anhkhoa.travellak.Repository.CountriesRepository;
-import com.anhkhoa.travellak.dto.Request.Countries.CountriesUpdateRequest;
-import com.anhkhoa.travellak.dto.Request.Countries.CountriesCreationRequest;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
+import com.anhkhoa.travellak.Entity.Countries;
+import com.anhkhoa.travellak.Mapper.CountriesMapper;
+import com.anhkhoa.travellak.Repository.CountriesRepository;
+import com.anhkhoa.travellak.dto.Request.Countries.CountriesCreationRequest;
+import com.anhkhoa.travellak.dto.Request.Countries.CountriesUpdateRequest;
+import com.anhkhoa.travellak.dto.Response.CountriesResponse;
+
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @Service
 @RequiredArgsConstructor
@@ -23,9 +26,9 @@ public class CountriesService {
     @Autowired
     CountriesMapper countriesMapper;
 
-    public Countries createCountry(CountriesCreationRequest request) {
+    public CountriesResponse createCountry(CountriesCreationRequest request) {
         Countries country = countriesMapper.toCountries(request);
-        return countriesRepository.save(country);
+        return countriesMapper.toCountriesResponse(countriesRepository.save(country));
     }
 
     public List<Countries> getAllCountries() {
@@ -34,13 +37,15 @@ public class CountriesService {
 
     // Read one by ID
     public Countries getCountryById(UUID id) {
-        return countriesRepository.findById(id)
+        return countriesRepository
+                .findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy quốc gia với ID: " + id));
     }
 
     // Update
     public Countries updateCountry(UUID id, CountriesUpdateRequest request) {
-        Countries countries = countriesRepository.findById(id)
+        Countries countries = countriesRepository
+                .findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy quốc gia để cập nhật"));
         countriesMapper.updateCountries(countries, request);
         return countriesRepository.save(countries);
@@ -54,5 +59,4 @@ public class CountriesService {
         countriesRepository.deleteById(id);
         return "Xoá thành công";
     }
-
 }

@@ -1,18 +1,20 @@
 package com.anhkhoa.travellak.Configuration;
 
-import com.anhkhoa.travellak.Entity.Role;
-import com.anhkhoa.travellak.Entity.Users;
-import com.anhkhoa.travellak.Repository.RoleRepository;
-import com.anhkhoa.travellak.Repository.UsersRepository;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
+import java.util.HashSet;
+
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.HashSet;
+import com.anhkhoa.travellak.Entity.Role;
+import com.anhkhoa.travellak.Entity.Users;
+import com.anhkhoa.travellak.Repository.RoleRepository;
+import com.anhkhoa.travellak.Repository.UsersRepository;
+
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @Configuration
 @RequiredArgsConstructor

@@ -1,10 +1,11 @@
 package com.anhkhoa.travellak.dto.Response;
 
+import java.util.UUID;
+
 import com.anhkhoa.travellak.Entity.Cities;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor

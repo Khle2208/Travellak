@@ -1,12 +1,11 @@
 package com.anhkhoa.travellak.dto.Response;
 
-import com.anhkhoa.travellak.Entity.Role;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @AllArgsConstructor
@@ -21,5 +20,5 @@ public class UsersResponse {
     String name;
     LocalDateTime createTime;
     LocalDateTime updateTime;
-    Set<RoleResponse>  roles;
+    Set<RoleResponse> roles;
 }

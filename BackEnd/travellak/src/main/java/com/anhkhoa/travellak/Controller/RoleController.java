@@ -1,14 +1,17 @@
 package com.anhkhoa.travellak.Controller;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.*;
+
 import com.anhkhoa.travellak.Service.RoleService;
 import com.anhkhoa.travellak.dto.Request.Role.RoleCreationRequest;
 import com.anhkhoa.travellak.dto.Response.ApiResponse;
 import com.anhkhoa.travellak.dto.Response.RoleResponse;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,7 +24,9 @@ public class RoleController {
 
     @PostMapping
     public ApiResponse<RoleResponse> create(@RequestBody RoleCreationRequest request) {
-        return ApiResponse.<RoleResponse>builder().result(roleService.create(request)).build();
+        return ApiResponse.<RoleResponse>builder()
+                .result(roleService.create(request))
+                .build();
     }
 
     @GetMapping("/{permissionName}")
@@ -30,11 +35,10 @@ public class RoleController {
         return ApiResponse.<Void>builder().build();
     }
 
-
     @GetMapping
     public ApiResponse<List<RoleResponse>> getAll() {
-        return ApiResponse.<List<RoleResponse>>builder().result(roleService.getAll()).build();
+        return ApiResponse.<List<RoleResponse>>builder()
+                .result(roleService.getAll())
+                .build();
     }
-
-
 }

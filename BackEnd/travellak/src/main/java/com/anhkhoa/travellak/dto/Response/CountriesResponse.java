@@ -1,17 +1,17 @@
 package com.anhkhoa.travellak.dto.Response;
 
-import java.util.Set;
+import java.util.UUID;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RoleResponse {
-    String roleName;
-    String description;
-    Set<PermissionResponse> permissions;
+public class CountriesResponse {
+    UUID countryId;
+    String countryName;
+    String isoCode;
 }

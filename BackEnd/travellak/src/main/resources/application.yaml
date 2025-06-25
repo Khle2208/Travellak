@@ -13,6 +13,8 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-
 jwt:
   signerKey: "37UAIl6O2+zY1ZGtQLqepDgBX1DhMnEM0oJ2g6DEXzRiN+H/5fJQGe4LE4wsuyuf"
+logging:
+  level:
+    org.springframework.security: DEBUG

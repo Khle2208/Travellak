@@ -1,11 +1,11 @@
 package com.anhkhoa.travellak.Repository;
 
-import com.anhkhoa.travellak.Entity.Cities;
+import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
+import com.anhkhoa.travellak.Entity.Cities;
 
 @Repository
-public interface CitiesRepository extends JpaRepository<Cities, UUID> {
-}
+public interface CitiesRepository extends JpaRepository<Cities, UUID> {}

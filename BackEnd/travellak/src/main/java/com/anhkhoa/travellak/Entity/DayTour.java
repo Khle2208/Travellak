@@ -1,9 +1,11 @@
 package com.anhkhoa.travellak.Entity;
+
 import java.util.UUID;
+
+import jakarta.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -17,10 +19,12 @@ public class DayTour {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID dayId;
-    
+
     int dayNumber;
+
     @Column(columnDefinition = "NVARCHAR(MAX)")
     String title;
+
     @Column(columnDefinition = "NVARCHAR(MAX)")
     String description;
 
@@ -33,4 +37,3 @@ public class DayTour {
     @JoinColumn(name = "attraction_id", nullable = false)
     private Attractions attraction;
 }
-

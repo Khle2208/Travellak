@@ -1,10 +1,11 @@
 package com.anhkhoa.travellak.Entity;
 
+import java.util.Set;
+
 import jakarta.persistence.*;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.Set;
 
 @Getter
 @Setter
@@ -16,6 +17,7 @@ import java.util.Set;
 public class Role {
     @Id
     String roleName;
+
     @Column(columnDefinition = "NVARCHAR(MAX)")
     String description;
 

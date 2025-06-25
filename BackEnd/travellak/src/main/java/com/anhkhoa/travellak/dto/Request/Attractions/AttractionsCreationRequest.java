@@ -1,12 +1,13 @@
 package com.anhkhoa.travellak.dto.Request.Attractions;
-import lombok.*;
 
 import java.util.UUID;
 
-import lombok.experimental.FieldDefaults;
 import org.springframework.web.multipart.MultipartFile;
 
-//@Data
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+// @Data
 @Getter
 @Setter
 @AllArgsConstructor

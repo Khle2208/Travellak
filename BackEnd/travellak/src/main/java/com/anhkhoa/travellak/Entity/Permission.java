@@ -3,6 +3,7 @@ package com.anhkhoa.travellak.Entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -18,5 +19,4 @@ public class Permission {
 
     @Column(columnDefinition = "NVARCHAR(MAX)")
     String description;
-
 }

@@ -1,5 +1,17 @@
 package com.anhkhoa.travellak.Service;
 
+import java.text.ParseException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.StringJoiner;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
 import com.anhkhoa.travellak.Entity.InvalidatedToken;
 import com.anhkhoa.travellak.Entity.Users;
 import com.anhkhoa.travellak.Repository.InvalidatedTokenRepository;
@@ -14,21 +26,11 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
-import java.text.ParseException;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.StringJoiner;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -37,12 +39,15 @@ public class AuthenticationService {
     UsersRepository usersRepository;
     PasswordEncoder passwordEncoder;
     InvalidatedTokenRepository invalidatedTokenRepository;
+
     @NonFinal
     @Value("${jwt.signerKey}")
     String SIGNER_KEY;
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        var user = usersRepository.findByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("Email không tồn tại"));
+        var user = usersRepository
+                .findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("Email không tồn tại"));
         boolean result = passwordEncoder.matches(request.getPassword(), user.getPassword());
         if (!result) {
             throw new RuntimeException("User not found");
@@ -63,9 +68,7 @@ public class AuthenticationService {
         } catch (RuntimeException e) {
             valid = false;
         }
-        return IntrospectResponse.builder()
-                .valid(valid)
-                .build();
+        return IntrospectResponse.builder().valid(valid).build();
     }
 
     public String generateToken(Users user) {
@@ -78,11 +81,7 @@ public class AuthenticationService {
                 .claim("role", user.getRoles())
                 .claim("scope", buildScope(user))
                 .claim("userId", user.getUserId())
-                .expirationTime(
-                        new Date(
-                                Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
-                        )
-                )
+                .expirationTime(new Date(Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()))
                 .build();
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
 
@@ -103,7 +102,6 @@ public class AuthenticationService {
         Date expTime = signToken.getJWTClaimsSet().getExpirationTime();
 
         invalidatedTokenRepository.save(new InvalidatedToken(jit, expTime));
-
     }
 
     private SignedJWT verifyToken(String token) throws JOSEException, ParseException {
@@ -125,7 +123,6 @@ public class AuthenticationService {
         }
 
         return signedJWT;
-
     }
 
     private String buildScope(Users user) {

@@ -1,11 +1,9 @@
 package com.anhkhoa.travellak.Configuration;
 
-import jakarta.servlet.http.HttpServletRequest;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 
 public class VNPayConfig {
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
@@ -58,18 +56,18 @@ public class VNPayConfig {
         }
     }
 
-//    public static String getIpAddress(HttpServletRequest request) {
-//        String ipAdress;
-//        try {
-//            ipAdress = request.getHeader("X-FORWARDED-FOR");
-//            if (ipAdress == null) {
-//                ipAdress = request.getRemoteAddr();
-//            }
-//        } catch (Exception e) {
-//            ipAdress = "Invalid IP:" + e.getMessage();
-//        }
-//        return ipAdress;
-//    }
+    //    public static String getIpAddress(HttpServletRequest request) {
+    //        String ipAdress;
+    //        try {
+    //            ipAdress = request.getHeader("X-FORWARDED-FOR");
+    //            if (ipAdress == null) {
+    //                ipAdress = request.getRemoteAddr();
+    //            }
+    //        } catch (Exception e) {
+    //            ipAdress = "Invalid IP:" + e.getMessage();
+    //        }
+    //        return ipAdress;
+    //    }
 
     public static String getRandomNumber(int len) {
         Random rnd = new Random();

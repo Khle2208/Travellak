@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.anhkhoa.travellak.Entity.DayTour;
-@Repository
-public interface DayTourRepository extends JpaRepository<DayTour, UUID> {
 
-}
+@Repository
+public interface DayTourRepository extends JpaRepository<DayTour, UUID> {}

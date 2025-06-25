@@ -4,20 +4,20 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-import com.anhkhoa.travellak.Mapper.TourImageMapper;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.anhkhoa.travellak.Entity.Tour;
 import com.anhkhoa.travellak.Entity.TourImage;
+import com.anhkhoa.travellak.Mapper.TourImageMapper;
 import com.anhkhoa.travellak.Repository.TourImageRepository;
 import com.anhkhoa.travellak.Repository.TourRepository;
 import com.anhkhoa.travellak.dto.Request.TourImage.TourImageCreationRequest;
 import com.anhkhoa.travellak.dto.Request.TourImage.TourImageUpdateRequest;
+
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @Service
 @RequiredArgsConstructor
@@ -42,8 +42,8 @@ public class TourImageService {
     }
 
     public TourImage createTourImage(TourImageCreationRequest request) {
-        Tour tour = tourRepository.findById(request.getTourId()).
-                orElseThrow(() -> new RuntimeException("Không có tour"));
+        Tour tour =
+                tourRepository.findById(request.getTourId()).orElseThrow(() -> new RuntimeException("Không có tour"));
         MultipartFile imageFile = request.getImage();
         TourImage tourImage = tourImageMapper.toTourImage(request);
         if (imageFile != null && !imageFile.isEmpty()) {
@@ -60,8 +60,8 @@ public class TourImageService {
 
     public TourImage updateTourImage(UUID tourImageId, TourImageUpdateRequest request) {
         TourImage tourImage = getTourImageById(tourImageId);
-        Tour tour = tourRepository.findById(request.getTourId()).
-                orElseThrow(() -> new RuntimeException("Không có tour"));
+        Tour tour =
+                tourRepository.findById(request.getTourId()).orElseThrow(() -> new RuntimeException("Không có tour"));
         tourImageMapper.updateTourImage(tourImage, request);
         MultipartFile imageFile = request.getImage();
         if (imageFile != null && !imageFile.isEmpty()) {

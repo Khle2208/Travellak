@@ -1,5 +1,7 @@
 package com.anhkhoa.travellak.Configuration;
 
+import javax.crypto.spec.SecretKeySpec;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,8 +23,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import javax.crypto.spec.SecretKeySpec;
-
 @Configuration // Đánh dấu cho Spring biết đây là class config
 @EnableWebSecurity // Kích hoạt Spring Security cho project
 @EnableMethodSecurity
@@ -33,31 +33,49 @@ public class SecurityConfig {
     private String signerKey;
 
     //    @Autowired
-//    private CustomJwtDecoder customJwtDecoder;
+    //    private CustomJwtDecoder customJwtDecoder;
     // Những request theo method post được public
     private final String[] PUBLIC_POST_ENDPOINTS = {
-            "/Users", "/Authentication/**", "/Tours/**", "/DayTour/**"
+        "/Users/SignUp", "/Authentication/**", "/Tours/**", "/DayTour/**", "/Countries", "Travellak/Users/SignUp"
     };
 
     // Những request theo method get được public
     private final String[] PUBLIC_GET_ENDPOINTS = {
-            "/Tours/**", "/DayTour", "/TourImage", "/Attractions", "/Cities", "/Tours", "/create_payment", "/Admin/GetChart", "/DayTour/**"
+        "/Tours/**",
+        "/DayTour",
+        "/TourImage",
+        "/Attractions",
+        "/Cities",
+        "/Tours",
+        "/create_payment",
+        "/Admin/GetChart",
+        "/DayTour/**"
     };
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
-        httpSecurity.cors(Customizer.withDefaults()).authorizeHttpRequests(request -> // request được gọi đến
-                request.requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS).permitAll()
-                        // nếu request match với phương thức post và nằm trong danh sách
-                        // PUBLIC_POST_ENDPOINTS thì chấp nhận tất cả
-                        .requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINTS).permitAll()
-                        .requestMatchers(HttpMethod.GET, "/Users").hasAuthority("ROLE_ADMIN").
-//                        .requestMatchers(HttpMethod.DELETE, "/Tours/**").permitAll().
-                        // nếu request match với phương thức get và nằm trong danh sách
-                        // PUBLIC_GET_ENDPOINTS thì chấp nhận tất cả
-                                anyRequest().authenticated());
+        httpSecurity
+                .cors(Customizer.withDefaults())
+                .authorizeHttpRequests(request ->
+                        // request được gọi đến
+                        request.requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS)
+                                .permitAll() // Allow ALL POST
+                                .requestMatchers(HttpMethod.GET, "/**")
+                                .permitAll()
+                                .
+                                //                requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS).permitAll()
+                                // nếu request match với phương thức post và nằm trong danh sách
+                                // PUBLIC_POST_ENDPOINTS thì chấp nhận tất cả
+                                //                        .requestMatchers(HttpMethod.GET,
+                                // PUBLIC_GET_ENDPOINTS).permitAll().
+                                //                        .requestMatchers(HttpMethod.GET,
+                                // "/Travellak/Users").hasAuthority("ROLE_ADMIN").
+                                //                        .requestMatchers(HttpMethod.DELETE, "/Tours/**").permitAll().
+                                // nếu request match với phương thức get và nằm trong danh sách
+                                // PUBLIC_GET_ENDPOINTS thì chấp nhận tất cả
+                                anyRequest()
+                                .authenticated());
         // các request còn lại phải được xác thực
         // .oauth2ResourceServer() bật chế độ OAuth2 Resource Server
         // khi bật chế độ này thì các request gửi đến đều có Bearer token trong header
@@ -65,13 +83,12 @@ public class SecurityConfig {
         // Decode và xác thực chữ ký.
         // Kiểm tra hạn, claims…
         // .jwt() chỉ định JWT làm Access Token Format thay vì các token khác
-        //.decoder(jwtDecoder())
+        // .decoder(jwtDecoder())
         // Chỉ định cách Spring giải mã và xác thực token.
         // jwtConfigurer.decoder() nhận vào một JwtDecoder
         // Mà đã định nghĩa bean jwtDecoder() ở dưới
-        httpSecurity.oauth2ResourceServer(oauth2 ->
-                oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())
-                        .jwtAuthenticationConverter(jwtAuthenticationConverter())));
+        httpSecurity.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer ->
+                jwtConfigurer.decoder(jwtDecoder()).jwtAuthenticationConverter(jwtAuthenticationConverter())));
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         return httpSecurity.build();
     }
@@ -92,16 +109,15 @@ public class SecurityConfig {
         // Tạo secretKey tương tự lúc tạo token
         SecretKeySpec secretKeySpec = new SecretKeySpec(signerKey.getBytes(), "HS512");
         return NimbusJwtDecoder
-                //.withSecretKey(secretKeySpec)
-                //→ Cấu hình Secret key để giải mã và verify token.
+                // .withSecretKey(secretKeySpec)
+                // → Cấu hình Secret key để giải mã và verify token.
                 .withSecretKey(secretKeySpec)
-                //→ Chỉ định thuật toán dùng để kiểm tra chữ ký của JWT là HMAC-SHA512.
+                // → Chỉ định thuật toán dùng để kiểm tra chữ ký của JWT là HMAC-SHA512.
                 // (nếu token không ký bằng HS512 → verify sẽ fail).
                 .macAlgorithm(MacAlgorithm.HS512)
-                //→ Tạo ra một instance JwtDecoder hoàn chỉnh.
+                // → Tạo ra một instance JwtDecoder hoàn chỉnh.
                 .build();
     }
-
 
     @Bean
     public CorsFilter corsFilter() {

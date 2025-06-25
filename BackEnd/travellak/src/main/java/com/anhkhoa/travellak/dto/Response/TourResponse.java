@@ -1,15 +1,16 @@
 package com.anhkhoa.travellak.dto.Response;
 
+import java.util.List;
+import java.util.UUID;
+
+import jakarta.persistence.*;
+
 import com.anhkhoa.travellak.Entity.Cities;
 import com.anhkhoa.travellak.Entity.DayTour;
 import com.anhkhoa.travellak.Entity.TourImage;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter

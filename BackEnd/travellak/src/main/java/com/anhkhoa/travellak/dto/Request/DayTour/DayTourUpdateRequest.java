@@ -3,6 +3,7 @@ package com.anhkhoa.travellak.dto.Request.DayTour;
 import java.util.UUID;
 
 import lombok.Data;
+
 @Data
 public class DayTourUpdateRequest {
     private int dayNumber;

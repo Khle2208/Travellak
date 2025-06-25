@@ -1,10 +1,9 @@
 package com.anhkhoa.travellak.Configuration;
+
 import java.text.ParseException;
 import java.util.Objects;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.anhkhoa.travellak.Service.AuthenticationService;
-import com.anhkhoa.travellak.dto.Request.Users.IntrospectRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
@@ -14,8 +13,8 @@ import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.stereotype.Component;
 
-
-
+import com.anhkhoa.travellak.Service.AuthenticationService;
+import com.anhkhoa.travellak.dto.Request.Users.IntrospectRequest;
 import com.nimbusds.jose.JOSEException;
 
 @Component

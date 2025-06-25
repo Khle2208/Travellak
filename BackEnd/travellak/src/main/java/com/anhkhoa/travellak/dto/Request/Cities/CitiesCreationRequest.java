@@ -1,8 +1,9 @@
 package com.anhkhoa.travellak.dto.Request.Cities;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
 
 import java.util.UUID;
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Getter
 @Setter

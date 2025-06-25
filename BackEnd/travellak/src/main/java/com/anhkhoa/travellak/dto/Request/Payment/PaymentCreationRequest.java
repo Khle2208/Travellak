@@ -1,9 +1,8 @@
 package com.anhkhoa.travellak.dto.Request.Payment;
 
-import lombok.Data;
-import lombok.Getter;
-
 import java.util.UUID;
+
+import lombok.Data;
 
 @Data
 public class PaymentCreationRequest {

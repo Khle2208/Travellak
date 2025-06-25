@@ -1,14 +1,15 @@
 package com.anhkhoa.travellak.Mapper;
 
-import com.anhkhoa.travellak.Entity.Attractions;
-import com.anhkhoa.travellak.dto.Request.Attractions.AttractionsCreationRequest;
-import com.anhkhoa.travellak.dto.Request.Attractions.AttractionsUpdateRequest;
-import com.anhkhoa.travellak.dto.Response.AttractionsResponse;
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-import java.util.List;
+import com.anhkhoa.travellak.Entity.Attractions;
+import com.anhkhoa.travellak.dto.Request.Attractions.AttractionsCreationRequest;
+import com.anhkhoa.travellak.dto.Request.Attractions.AttractionsUpdateRequest;
+import com.anhkhoa.travellak.dto.Response.AttractionsResponse;
 
 @Mapper(componentModel = "spring")
 public interface AttractionsMapper {
@@ -22,6 +23,6 @@ public interface AttractionsMapper {
     void updateAttractions(@MappingTarget Attractions attractions, AttractionsUpdateRequest request);
 
     AttractionsResponse toAttractionsResponse(Attractions attraction);
-    List<AttractionsResponse> toListAttractionsResponse(List<Attractions> attractions);
 
+    List<AttractionsResponse> toListAttractionsResponse(List<Attractions> attractions);
 }
