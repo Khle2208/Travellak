@@ -5,7 +5,8 @@ server:
 
 spring:
   datasource:
-    url: "jdbc:sqlserver://localhost:1433;databaseName=Travellak;trustServerCertificate=true;useUnicode=true&characterEncoding=UTF-8"
+#    url: "${DBMS_CONNECTION:jdbc:sqlserver://sqlserver;databaseName=Travellak;trustServerCertificate=true;useUnicode=true&characterEncoding=UTF-8}"
+    url:  jdbc:sqlserver://host.docker.internal:1433;databaseName=Travellak;trustServerCertificate=true;encrypt=false
     username: sa
     password: Password.1
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
@@ -18,3 +19,4 @@ jwt:
 logging:
   level:
     org.springframework.security: DEBUG
+    org.springframework.jdbc.datasource: DEBUG

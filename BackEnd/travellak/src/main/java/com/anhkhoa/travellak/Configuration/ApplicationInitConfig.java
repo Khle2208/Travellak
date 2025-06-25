@@ -25,6 +25,22 @@ public class ApplicationInitConfig {
 
     @Bean
     ApplicationRunner applicationRunner(UsersRepository usersRepository) {
+        if (!roleRepository.existsById("ADMIN")) {
+            Role adminRole = new Role();
+            adminRole.setRoleName("ADMIN");
+            adminRole.setDescription("Quyền admin");
+            roleRepository.save(adminRole);
+            System.out.println(">>> Đã tạo ROLE_ADMIN");
+        }
+
+        // Bạn có thể thêm các role khác nếu muốn
+        if (!roleRepository.existsById("USER")) {
+            Role userRole = new Role();
+            userRole.setRoleName("USER");
+            userRole.setDescription("Quyền người dùng cơ bản");
+            roleRepository.save(userRole);
+            System.out.println(">>> Đã tạo ROLE_USER");
+        }
         Role adminRole = roleRepository.findById("ADMIN").orElseThrow(() -> new RuntimeException("Role không tồn tại"));
         var roles = new HashSet<Role>();
         roles.add(adminRole);
