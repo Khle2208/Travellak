@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.context.annotation.Role;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,7 +41,7 @@ public class TourService {
     public List<TourResponse> getAllTour() {
         return tourMapper.toListTourResponses(tourRepository.findAll());
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     public TourResponse createTour(TourCreationRequest request) {
 
         Cities departureCity = citiesRepository

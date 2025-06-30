@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.anhkhoa.travellak.dto.Response.ApiResponse;
+import com.anhkhoa.travellak.dto.Response.DayTourResponse;
 import org.springframework.web.bind.annotation.*;
 
 import com.anhkhoa.travellak.Entity.DayTour;
@@ -24,23 +26,29 @@ public class DayTourController {
     DayTourService dayTourService;
 
     @GetMapping("/{dayTourId}")
-    public DayTour getDayTourById(@PathVariable("dayTourId") UUID dayTourId) {
-        return dayTourService.getDayTourById(dayTourId);
+    public ApiResponse<DayTourResponse> getDayTourById(@PathVariable("dayTourId") UUID dayTourId) {
+        return ApiResponse.<DayTourResponse>builder().result(dayTourService.getDayTourById(dayTourId)).build();
     }
 
+    @GetMapping("/ByTour/{tourId}")
+    public ApiResponse<List<DayTourResponse>> getDayTourByTourId(@PathVariable("tourId") UUID tourId){
+        return ApiResponse.<List<DayTourResponse>>builder().result(dayTourService.getDayTourByTourId(tourId)).build();
+    }
     @GetMapping
-    public List<DayTour> getAllDayTour() {
-        return dayTourService.getAllDayTour();
+    public ApiResponse<List<DayTourResponse>> getAllDayTour() {
+        return ApiResponse.<List<DayTourResponse>>builder().result(dayTourService.getAllDayTour()).build();
     }
 
     @PostMapping
-    public DayTour createDayTour(@RequestBody DayTourCreationRequest request) {
-        return dayTourService.createDayTour(request);
+    public ApiResponse<DayTourResponse> createDayTour(@RequestBody DayTourCreationRequest request) {
+        return ApiResponse.<DayTourResponse>builder().result(dayTourService.createDayTour(request)).build();
+
     }
 
     @PutMapping("/{dayTourId}")
-    public DayTour updateDayTour(@PathVariable("dayTourId") UUID dayTourId, @RequestBody DayTourUpdateRequest request) {
-        return dayTourService.updateDayTour(dayTourId, request);
+    public ApiResponse<DayTourResponse> updateDayTour(@PathVariable("dayTourId") UUID dayTourId, @RequestBody DayTourUpdateRequest request) {
+        return ApiResponse.<DayTourResponse>builder().result(dayTourService.updateDayTour(dayTourId, request)).build();
+
     }
 
     @DeleteMapping("/{dayTourId}")
@@ -49,7 +57,7 @@ public class DayTourController {
     }
 
     @PostMapping("AddListDayTour")
-    public List<DayTour> createDayTours(@RequestBody List<DayTourCreationRequest> requests) {
-        return requests.stream().map(dayTourService::createDayTour).collect(Collectors.toList());
+    public ApiResponse<List<DayTourResponse>> createDayTours(@RequestBody List<DayTourCreationRequest> requests) {
+        return ApiResponse.<List<DayTourResponse>>builder().result(requests.stream().map(dayTourService::createDayTour).collect(Collectors.toList())).build();
     }
 }

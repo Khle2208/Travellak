@@ -3,6 +3,7 @@ package com.anhkhoa.travellak.Service;
 import java.util.List;
 import java.util.UUID;
 
+import com.anhkhoa.travellak.dto.Response.DayTourResponse;
 import org.springframework.stereotype.Service;
 
 import com.anhkhoa.travellak.Entity.Attractions;
@@ -31,15 +32,19 @@ public class DayTourService {
 
     DayTourMapper dayTourMapper;
 
-    public DayTour getDayTourById(UUID dayTourId) {
-        return dayTourRepository.findById(dayTourId).orElseThrow(() -> new RuntimeException("Không có day tour"));
+    public DayTourResponse getDayTourById(UUID dayTourId) {
+        return dayTourMapper.toDayTourResponse(dayTourRepository.findById(dayTourId).orElseThrow(() -> new RuntimeException("Không có day tour")));
     }
 
-    public List<DayTour> getAllDayTour() {
-        return dayTourRepository.findAll();
+    public List<DayTourResponse> getDayTourByTourId(UUID tourId) {
+        return dayTourMapper.toListDayTourResponse(dayTourRepository.findByTour_TourId(tourId));
     }
 
-    public DayTour createDayTour(DayTourCreationRequest request) {
+    public List<DayTourResponse> getAllDayTour() {
+        return dayTourMapper.toListDayTourResponse(dayTourRepository.findAll());
+    }
+
+    public DayTourResponse createDayTour(DayTourCreationRequest request) {
         Attractions attraction = attractionsRepository
                 .findById(request.getAttractionId())
                 .orElseThrow(() -> new RuntimeException("Không có đia điểm"));
@@ -49,11 +54,12 @@ public class DayTourService {
         DayTour day = dayTourMapper.toDayTour(request);
         day.setTour(tour);
         day.setAttraction(attraction);
-        return dayTourRepository.save(day);
+        return dayTourMapper.toDayTourResponse(dayTourRepository.save(day));
+
     }
 
-    public DayTour updateDayTour(UUID dayTourId, DayTourUpdateRequest request) {
-        DayTour day = getDayTourById(dayTourId);
+    public DayTourResponse updateDayTour(UUID dayTourId, DayTourUpdateRequest request) {
+        DayTour day = dayTourRepository.findById(dayTourId).orElseThrow(() -> new RuntimeException("Không có day tour"));
 
         Attractions attraction = attractionsRepository
                 .findById(request.getAttractionId())
@@ -63,11 +69,11 @@ public class DayTourService {
         dayTourMapper.updateDayTour(day, request);
         day.setTour(tour);
         day.setAttraction(attraction);
-        return dayTourRepository.save(day);
+        return dayTourMapper.toDayTourResponse(dayTourRepository.save(day));
     }
 
     public String deleteDayTour(UUID dayTourId) {
-        DayTour day = getDayTourById(dayTourId);
+        DayTour day = dayTourRepository.findById(dayTourId).orElseThrow(() -> new RuntimeException("Không có day tour"));
         dayTourRepository.delete(day);
         return "Xoá thành công";
     }
